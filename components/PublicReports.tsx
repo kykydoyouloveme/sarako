@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type PublicReport = { id: string; category: string; description: string; location: string; created_at: string; has_photo: boolean };
 
-export default function PublicReports({ onReport }: { onReport: () => void }) {
+export default function PublicReports() {
   const [reports, setReports] = useState<PublicReport[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function PublicReports({ onReport }: { onReport: () => void }) {
 
   return <section className="section public-reports" id="community-reports">
     <div className="wrap">
-      <div className="section-head"><div><div className="kicker">Ulat na nasuri na</div><h2>Mga report sa komunidad</h2><p className="reports-intro">Ipinapakita rito ang mga report na inaprubahan ng admin.</p></div><div className="reports-actions"><span className="report-count">{reports.length} naaprubahan</span><button className="btn" onClick={onReport}>Mag-ulat ng isyu <span aria-hidden="true">→</span></button></div></div>
+      <div className="section-head"><div><div className="kicker">Ulat na nasuri na</div><h2>Mga report sa komunidad</h2><p className="reports-intro">Ipinapakita rito ang mga report na inaprubahan ng admin.</p></div><span className="report-count">{reports.length} naaprubahan</span></div>
       {loading ? <div className="empty-state">Kinukuha ang mga report…</div> : reports.length ? <div className="public-report-grid">{reports.map((report) => <article className="public-report-card" key={report.id}>
         {report.has_photo && <img className="public-report-photo" src={`/api/reports/${report.id}/image`} alt={`Larawan ng report tungkol sa ${report.category}`} loading="lazy"/>}
         <div className="public-report-content"><span className="tag report-category">{report.category}</span><h3>{report.location}</h3><p>{report.description}</p><time>{new Date(report.created_at).toLocaleDateString("fil-PH", { year: "numeric", month: "long", day: "numeric" })}</time></div>
