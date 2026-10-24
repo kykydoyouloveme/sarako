@@ -21,6 +21,7 @@ export type ReportDoc = {
   status: string;
   created_at: Date;
   is_approved: boolean;
+  approval_status?: "Pending" | "Approved" | "Declined";
   image?: { data: string; content_type: string; original_name: string };
 };
 

@@ -14,7 +14,8 @@ export async function GET() {
     const reports = reportRows.map((item) => ({
       id: item._id!.toHexString(), name: item.name, contact: item.contact, category: item.category,
       description: item.description, location: item.location, status: item.status,
-      created_at: item.created_at.toISOString(), is_approved: Boolean(item.is_approved), has_photo: Boolean(item.image?.data),
+      created_at: item.created_at.toISOString(), is_approved: Boolean(item.is_approved),
+      approval_status: item.approval_status ?? (item.is_approved ? "Approved" : "Pending"), has_photo: Boolean(item.image?.data),
     }));
     return NextResponse.json({ announcements, reports });
   } catch { return NextResponse.json({ error: "Hindi makakonekta sa database." }, { status: 503 }); }

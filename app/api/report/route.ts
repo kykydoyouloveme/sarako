@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     if (!isJpeg && !isPng && !isWebp) return NextResponse.json({ error: "Hindi tugma ang file sa napiling uri ng larawan." }, { status: 400 });
     const { reports } = await getCollections();
     await reports.insertOne({
-      name, contact, category, description, location, status: "Natanggap", is_approved: false, created_at: new Date(),
+      name, contact, category, description, location, status: "Natanggap", is_approved: false, approval_status: "Pending", created_at: new Date(),
       image: { data: imageBytes.toString("base64"), content_type: contentType, original_name: photo.name.slice(0, 120) },
     });
     return NextResponse.json({ ok: true, message: "Natanggap ang report at lalabas lang ito sa publiko kapag naaprubahan ng admin." });
