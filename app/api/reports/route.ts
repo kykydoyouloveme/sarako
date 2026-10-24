@@ -9,6 +9,7 @@ export async function GET() {
       id: item._id!.toHexString(),
       category: item.category,
       description: item.description,
+      photo_comment: item.photo_comment ?? "",
       location: item.location,
       created_at: item.created_at.toISOString(),
       has_photo: Boolean(item.image?.data),

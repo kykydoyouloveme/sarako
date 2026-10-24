@@ -14,7 +14,7 @@ export async function GET() {
     const announcements = announcementRows.map((item) => ({ ...item, id: item._id!.toHexString(), _id: undefined, published_at: item.published_at.toISOString() }));
     const reports = reportRows.map((item) => ({
       id: item._id!.toHexString(), name: item.name, contact: item.contact, category: item.category,
-      description: item.description, location: item.location, status: item.status,
+      description: item.description, photo_comment: item.photo_comment ?? "", location: item.location, status: item.status,
       created_at: item.created_at.toISOString(), is_approved: Boolean(item.is_approved),
       approval_status: item.approval_status ?? (item.is_approved ? "Approved" : "Pending"), has_photo: Boolean(item.image?.data),
     }));
