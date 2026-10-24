@@ -1,6 +1,6 @@
 # SARAKO
 
-Mobile-friendly city-services portal built with Next.js for Vercel. The SARAKO wordmark displays a heart in place of its second “A”. Features include public service links, MongoDB-backed announcements, emergency contact links, citizen issue reports, and a one-admin dashboard.
+Mobile-friendly city-services portal built with Next.js for Vercel. The SARAKO wordmark displays a heart in place of its second “A”. Features include public service links, MongoDB-backed announcements and reports, emergency contact links, image attachments, and a one-admin dashboard. New reports stay private until the admin approves them; only approved reports and their photos appear on the public report board.
 
 ## Deploy on Vercel
 
@@ -22,3 +22,5 @@ Copy `.env.example` to `.env.local`, provide a MongoDB Atlas URI and admin crede
 - Confirm hotline numbers with the city.
 - Publish the city's privacy notice and report retention policy.
 - Connect reports to the responsible city staff workflow and set a response process.
+
+Report photos are restricted to JPEG, PNG, or WebP and 4 MB each. Photo data is stored with its report in MongoDB; unauthenticated users can fetch it only after the report is approved.

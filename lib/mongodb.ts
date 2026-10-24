@@ -20,6 +20,8 @@ export type ReportDoc = {
   location: string;
   status: string;
   created_at: Date;
+  is_approved: boolean;
+  image?: { data: string; content_type: string; original_name: string };
 };
 
 declare global {
