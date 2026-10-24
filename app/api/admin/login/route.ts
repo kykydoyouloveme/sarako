@@ -6,11 +6,15 @@ export async function POST(request: Request) {
     const { username, password } = await request.json();
     const expectedUser = process.env.ADMIN_USERNAME;
     const expectedPass = process.env.ADMIN_PASSWORD;
+    const secondUser = process.env.ADMIN_USERNAME_2;
+    const secondPass = process.env.ADMIN_PASSWORD_2;
     const authSecret = process.env.AUTH_SECRET;
-    if (!expectedUser || !expectedPass || expectedPass.length < 14 || !authSecret || authSecret.length < 32) {
+    const secondAccountPartiallyConfigured = Boolean(secondUser) !== Boolean(secondPass);
+    if (!expectedUser || !expectedPass || expectedPass.length < 14 || secondAccountPartiallyConfigured || (secondPass && secondPass.length < 14) || (secondUser && secondUser === expectedUser) || !authSecret || authSecret.length < 32) {
       return NextResponse.json({ error: "Hindi pa naka-configure nang ligtas ang admin login." }, { status: 503 });
     }
-    if (typeof username !== "string" || typeof password !== "string" || username !== expectedUser || password !== expectedPass) {
+    const accounts = [{ username: expectedUser, password: expectedPass }, ...(secondUser && secondPass ? [{ username: secondUser, password: secondPass }] : [])];
+    if (typeof username !== "string" || typeof password !== "string" || !accounts.some((account) => username === account.username && password === account.password)) {
       return NextResponse.json({ error: "Mali ang username o password." }, { status: 401 });
     }
     await createAdminSession();
