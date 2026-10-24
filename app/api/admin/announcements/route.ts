@@ -24,3 +24,15 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ ok: true });
   } catch { return NextResponse.json({ error: "Hindi na-update ang anunsyo." }, { status: 503 }); }
 }
+
+export async function DELETE(request: Request) {
+  if (!await isAdmin()) return NextResponse.json({ error: "Hindi awtorisado." }, { status: 401 });
+  try {
+    const data = await request.json(); const id = String(data.id ?? "");
+    if (!/^[a-f\d]{24}$/i.test(id)) return NextResponse.json({ error: "Hindi wastong ID." }, { status: 400 });
+    const { announcements } = await getCollections();
+    const result = await announcements.deleteOne({ _id: new ObjectId(id) });
+    if (!result.deletedCount) return NextResponse.json({ error: "Hindi makita ang balita o anunsyo." }, { status: 404 });
+    return NextResponse.json({ ok: true });
+  } catch { return NextResponse.json({ error: "Hindi nabura ang balita o anunsyo." }, { status: 503 }); }
+}
