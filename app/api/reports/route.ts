@@ -9,7 +9,7 @@ export async function GET() {
       id: item._id!.toHexString(),
       category: item.category,
       description: item.description,
-      photo_comment: item.photo_comment ?? "",
+      comments: (item.comments ?? []).map((comment) => ({ name: comment.name, body: comment.body, created_at: comment.created_at.toISOString() })),
       location: item.location,
       created_at: item.created_at.toISOString(),
       has_photo: Boolean(item.image?.data),
