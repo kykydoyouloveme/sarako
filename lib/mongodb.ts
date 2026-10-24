@@ -25,6 +25,20 @@ export type ReportDoc = {
   image?: { data: string; content_type: string; original_name: string };
 };
 
+export type JobPostDoc = {
+  _id?: ObjectId;
+  title: string;
+  category: string;
+  body: string;
+  published_at: Date;
+  is_published: boolean;
+  employer: string;
+  contact: string;
+  location: string;
+  status: "Pending" | "Approved" | "Declined";
+  created_at: Date;
+};
+
 declare global {
   // Reuse the MongoDB connection pool across requests and Next.js hot reloads.
   var _sarakoMongoClient: MongoClient | undefined;
@@ -55,10 +69,12 @@ let setup: Promise<void> | undefined;
 export async function getCollections(): Promise<{
   announcements: Collection<AnnouncementDoc>;
   reports: Collection<ReportDoc>;
+  jobPosts: Collection<JobPostDoc>;
 }> {
   const db = await getDatabase();
   const announcements = db.collection<AnnouncementDoc>("announcements");
   const reports = db.collection<ReportDoc>("reports");
+  const jobPosts = db.collection<JobPostDoc>("job_posts");
 
   if (!setup) {
     setup = (async () => {
@@ -66,6 +82,7 @@ export async function getCollections(): Promise<{
         announcements.createIndex({ published_at: -1 }),
         announcements.createIndex({ seed_key: 1 }, { unique: true, sparse: true }),
         reports.createIndex({ created_at: -1 }),
+        jobPosts.createIndex({ created_at: -1 }),
       ]);
 
       const starters = [
@@ -83,7 +100,7 @@ export async function getCollections(): Promise<{
     })().catch((error) => { setup = undefined; throw error; });
   }
   await setup;
-  return { announcements, reports };
+  return { announcements, reports, jobPosts };
 }
 
 export { ObjectId };
