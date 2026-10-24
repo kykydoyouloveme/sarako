@@ -21,3 +21,18 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ ok: true });
   } catch { return NextResponse.json({ error: "Hindi na-update ang report." }, { status: 503 }); }
 }
+
+export async function DELETE(request: Request) {
+  if (!await isAdmin()) return NextResponse.json({ error: "Hindi awtorisado." }, { status: 401 });
+  try {
+    const data = await request.json(); const id = String(data.id ?? "");
+    if (!/^[a-f\d]{24}$/i.test(id)) return NextResponse.json({ error: "Hindi wastong report." }, { status: 400 });
+    const { reports } = await getCollections();
+    const result = await reports.deleteOne({
+      _id: new ObjectId(id),
+      $or: [{ approval_status: "Declined" }, { status: "Tapos na" }],
+    });
+    if (!result.deletedCount) return NextResponse.json({ error: "Maaari lang burahin ang tinanggihan o tapos nang report." }, { status: 409 });
+    return NextResponse.json({ ok: true });
+  } catch { return NextResponse.json({ error: "Hindi nabura ang report." }, { status: 503 }); }
+}

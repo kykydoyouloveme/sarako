@@ -13,3 +13,4 @@ header{height:76px;display:flex;align-items:center;background:#fff;border-bottom
 @media(max-width:780px){.public-report-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.public-report-grid{grid-template-columns:1fr}.public-report-photo{height:220px}.report-count{white-space:nowrap}.reports-intro{max-width:250px}}
 table{min-width:1020px}
 .declined-badge{border-radius:999px;padding:4px 8px;font-size:10px;font-weight:750;color:#8a3028;background:#fbe5e2}.decline-button{color:#8a3028}.decline-button:hover{background:#fff0ee}
+.delete-report-button{color:#8a3028;border-color:#f0d4d0;background:#fff8f7}.delete-report-button:hover{background:#fff0ee}
