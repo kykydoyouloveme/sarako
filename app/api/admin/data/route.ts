@@ -3,7 +3,7 @@ import { getCollections } from "@/lib/mongodb";
 import { isAdmin } from "@/lib/session";
 
 export async function GET() {
-  if (!await isAdmin()) return NextResponse.json({ error: "Hindi awtorisado." }, { status: 401 });
+  if (!await isAdmin()) return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   try {
     const { announcements: announcementCollection, reports: reportCollection, jobPosts: jobPostCollection } = await getCollections();
     const [announcementRows, reportRows, jobPostRows] = await Promise.all([
@@ -24,5 +24,5 @@ export async function GET() {
       status: item.status, created_at: item.created_at.toISOString(), is_published: item.is_published,
     }));
     return NextResponse.json({ announcements, reports, jobPosts });
-  } catch { return NextResponse.json({ error: "Hindi makakonekta sa database." }, { status: 503 }); }
+  } catch { return NextResponse.json({ error: "Unable to connect to the database." }, { status: 503 }); }
 }
