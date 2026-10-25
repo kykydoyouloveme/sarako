@@ -22,7 +22,7 @@ export default function Home({ announcements }: { announcements: Announcement[] 
   const news = announcements.length ? announcements : initialNews;
   const city = process.env.NEXT_PUBLIC_CITY_NAME || "SARAKO";
   const emergency = process.env.NEXT_PUBLIC_EMERGENCY_NUMBER || "911";
-  const tagline = process.env.NEXT_PUBLIC_CITY_TAGLINE || "Malapit sa bawat mamamayan";
+  const tagline = process.env.NEXT_PUBLIC_CITY_TAGLINE || "Banwa ko, Gugma ko";
 
   async function submitReport(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setSending(true); setMessage("");
