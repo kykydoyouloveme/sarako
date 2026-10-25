@@ -12,7 +12,7 @@ export default async function Page() {
     ]);
     announcements = [
       ...rows.map((row) => ({ id: row._id!.toHexString(), title: row.title, category: row.category, body: row.body, published_at: row.published_at.toISOString() })),
-      ...approvedJobs.map((job) => ({ id: job._id!.toHexString(), title: job.title, category: job.category, body: `${job.employer} · ${job.location}\nKontak: ${job.contact}\n${job.body}`, published_at: job.published_at.toISOString() })),
+      ...approvedJobs.map((job) => ({ id: job._id!.toHexString(), title: job.employer, category: job.category, body: `Location: ${job.location}\nContact: ${job.contact}\n${job.body}`, published_at: job.published_at.toISOString() })),
     ].sort((a, b) => b.published_at.localeCompare(a.published_at)).slice(0, 3);
   } catch { /* The public landing page remains visible while database setup is pending. */ }
   return <Home announcements={announcements} />;

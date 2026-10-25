@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
     const { jobPosts } = await getCollections();
     await jobPosts.insertOne({
-      employer, contact, title: `${employer} — naghahanap ng empleyado`, location, body, category: "Trabaho",
+      employer, contact, title: employer, location, body, category: "Trabaho",
       status: "Pending", is_published: false, published_at: new Date(), created_at: new Date(),
     });
     return NextResponse.json({ ok: true, message: "Natanggap ang alok na trabaho. Lalabas ito sa Balita at Anunsyo kapag naaprubahan ng admin." });
